@@ -1,0 +1,19 @@
+<resources>
+
+    <style name="NoTitleBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+
+    </style>
+
+
+   <!-- <style name="CheckBoxTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        &lt;!&ndash; Customize your theme here. &ndash;&gt;
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/customCheckBox</item>
+        <item name="android:statusBarColor">@color/statusbar_bg</item>
+    </style>
+-->
+</resources>
