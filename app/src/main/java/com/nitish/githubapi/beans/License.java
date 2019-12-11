@@ -1,8 +1,10 @@
 package com.nitish.githubapi.beans;
 
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class License{
+public class License {
 
 	@SerializedName("name")
 	private String name;

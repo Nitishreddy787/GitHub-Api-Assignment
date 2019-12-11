@@ -1,0 +1,64 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <dimen name="fab_margin">16dp</dimen>
+<dimen name="toolbarmargin">20dp</dimen>
+    <!-- Padding -->
+    <dimen name="pad_1">1dp</dimen>
+    <dimen name="pad_5">5dp</dimen>
+    <dimen name="pad_10">10dp</dimen>
+    <dimen name="pad_15">15dp</dimen>
+    <dimen name="pad_20">20dp</dimen>
+    <dimen name="pad_24">24dp</dimen>
+
+    <dimen name="pad_25">25dp</dimen>
+    <dimen name="pad_30">30dp</dimen>
+    <dimen name="pad_35">35dp</dimen>
+    <dimen name="pad_40">40dp</dimen>
+    <dimen name="pad_45">45dp</dimen>
+    <dimen name="pad_50">50dp</dimen>
+
+    <!-- Margin -->
+    <dimen name="mrg_5">5dp</dimen>
+    <dimen name="mrg_10">10dp</dimen>
+    <dimen name="mrg_15">15dp</dimen>
+    <dimen name="mrg_20">20dp</dimen>
+    <dimen name="mrg_25">25dp</dimen>
+    <dimen name="mrg_30">30dp</dimen>
+    <dimen name="mrg_35">35dp</dimen>
+    <dimen name="mrg_40">40dp</dimen>
+    <dimen name="mrg_45">45dp</dimen>
+    <dimen name="mrg_50">50dp</dimen>
+
+    <!-- Font Sizes -->
+    <dimen name="text_10">10sp</dimen>
+    <dimen name="text_12">12sp</dimen>
+    <dimen name="text_13">13sp</dimen>
+    <dimen name="text_14">14sp</dimen>
+    <dimen name="text_15">15sp</dimen>
+    <dimen name="text_16">16sp</dimen>
+    <dimen name="text_18">18sp</dimen>
+    <dimen name="text_20">20sp</dimen>
+    <dimen name="text_22">22sp</dimen>
+    <dimen name="text_26">26sp</dimen>
+    <dimen name="text_30">30sp</dimen>
+    <dimen name="text_36">36sp</dimen>
+    <dimen name="title1">32sp</dimen>
+    <dimen name="title2">24sp</dimen>
+    <dimen name="title3">18sp</dimen>
+    <dimen name="title4">16sp</dimen>
+    <dimen name="design_navigation_icon_size" tools:override="true">18dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+
+    <!-- Text Sizes-->
+    <dimen name="headerOne">20sp</dimen>
+    <dimen name="headerTwo">18sp</dimen>
+    <dimen name="headerThree">16sp</dimen>
+    <dimen name="headerFour">14sp</dimen>
+    <dimen name="headerFive">12sp</dimen>
+    <dimen name="headerSix">10sp</dimen>
+
+</resources>

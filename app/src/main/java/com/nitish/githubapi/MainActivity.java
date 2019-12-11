@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.SearchView;
 
 import com.google.gson.JsonObject;
 import com.nitish.githubapi.adapters.RepositorysRecyclerViewAdapter;
@@ -13,6 +14,8 @@ import com.nitish.githubapi.beans.RepositoryApiResponse;
 import com.nitish.githubapi.services.MyRetrofit;
 import com.nitish.githubapi.services.Repos;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,10 +24,15 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+  //ZacSweers
+
   MyRetrofit retrofit;
   Repos repos;
   RecyclerView recyclerView;
   RepositorysRecyclerViewAdapter repositorysRecyclerViewAdapter;
+
+  SearchView searchRepositories;
+  String[] searchQueries;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     recyclerView=findViewById(R.id.recycler_view);
+    searchRepositories=findViewById(R.id.search_repositories);
 
     retrofit=MyRetrofit.getInstance();
     repos=retrofit.getApiRepos();
@@ -42,12 +51,15 @@ public class MainActivity extends AppCompatActivity {
 
   public void getRepos(){
 
-    repos.getUserRepos("Nitishreddy787").enqueue(new Callback<List<RepositoryApiResponse>>() {
+    repos.getUserRepos("sav007").enqueue(new Callback<List<RepositoryApiResponse>>() {
       @Override
       public void onResponse(@NonNull Call<List<RepositoryApiResponse>> call,@NonNull Response<List<RepositoryApiResponse>> response) {
           runOnUiThread(()->{
             try{
-              System.out.println("Total Repository's::::"+response.body());
+
+              Collections.sort(response.body(), (o1, o2) -> ((Integer)o1.getWatchersCount()).compareTo(o2.getWatchersCount()));
+
+
               LinearLayoutManager linearLayoutManager=new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL,false);
               recyclerView.setLayoutManager(linearLayoutManager );
               repositorysRecyclerViewAdapter =new RepositorysRecyclerViewAdapter(MainActivity.this,response.body());
