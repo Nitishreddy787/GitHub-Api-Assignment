@@ -18,11 +18,18 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".InAppBrowserActivity"
+            android:name=".ContributorDetailsActivity"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleBarTheme"
             android:windowSoftInputMode="adjustPan"/>
+
+        <activity
+            android:name=".InAppBrowserActivity"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleBarTheme"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".RepositoryDetailsActivity"
             android:hardwareAccelerated="true"

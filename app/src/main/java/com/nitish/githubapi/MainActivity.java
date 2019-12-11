@@ -14,6 +14,7 @@ import com.nitish.githubapi.beans.RepositoryApiResponse;
 import com.nitish.githubapi.services.MyRetrofit;
 import com.nitish.githubapi.services.Repos;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
   SearchView searchRepositories;
   String[] searchQueries;
+  List<RepositoryApiResponse> repositoryApiList;
+  int maxSize=10;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -51,24 +54,27 @@ public class MainActivity extends AppCompatActivity {
 
   public void getRepos(){
 
-    repos.getUserRepos("sav007").enqueue(new Callback<List<RepositoryApiResponse>>() {
+    repos.getUserRepos("ZacSweers").enqueue(new Callback<List<RepositoryApiResponse>>() {
       @Override
       public void onResponse(@NonNull Call<List<RepositoryApiResponse>> call,@NonNull Response<List<RepositoryApiResponse>> response) {
           runOnUiThread(()->{
-            try{
 
-              Collections.sort(response.body(), (o1, o2) -> ((Integer)o1.getWatchersCount()).compareTo(o2.getWatchersCount()));
+            if(response.body() != null){
+              Collections.sort(response.body(), (o1, o2) -> Integer.compare(o2.getWatchersCount(), o1.getWatchersCount()));
 
+              if (response.body().size() < 10) {
+                maxSize = response.body().size();
+              }
+
+              repositoryApiList=new ArrayList<>();
+              for(int i=0;i<maxSize;i++) repositoryApiList.add(response.body().get(i));
 
               LinearLayoutManager linearLayoutManager=new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL,false);
               recyclerView.setLayoutManager(linearLayoutManager );
-              repositorysRecyclerViewAdapter =new RepositorysRecyclerViewAdapter(MainActivity.this,response.body());
+              repositorysRecyclerViewAdapter =new RepositorysRecyclerViewAdapter(MainActivity.this,repositoryApiList);
               recyclerView.setAdapter(repositorysRecyclerViewAdapter);
-            }catch (Exception e){
-              System.out.println("repository list api exception::::"+e.getMessage());
-              System.out.println("repository list api exception::::"+e.getCause());
-
             }
+
           });
       }
 
@@ -79,4 +85,5 @@ public class MainActivity extends AppCompatActivity {
       }
     });
   }
+
 }

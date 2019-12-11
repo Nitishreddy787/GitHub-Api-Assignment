@@ -8,6 +8,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
+        android:id="@+id/contributors_layout"
         android:layout_width="108dp"
         android:layout_height="wrap_content"
         android:clickable="true"

@@ -106,7 +106,7 @@ public class RepositorysRecyclerViewAdapter extends RecyclerView.Adapter<Reposit
 
   private void commits(int position, TextView commits){
 
-    repos.commits("sav007",response.get(position).getName()).enqueue(new Callback<List<CommitsApiResponse>>() {
+    repos.commits("ZacSweers",response.get(position).getName()).enqueue(new Callback<List<CommitsApiResponse>>() {
       @Override
       public void onResponse(Call<List<CommitsApiResponse>> call, Response<List<CommitsApiResponse>> response) {
         ((Activity) context).runOnUiThread(()-> {

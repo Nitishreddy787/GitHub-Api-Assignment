@@ -1,6 +1,5 @@
 package com.nitish.githubapi.services;
 
-import com.google.gson.JsonObject;
 import com.nitish.githubapi.beans.CommitsApiResponse;
 import com.nitish.githubapi.beans.ContributorsApiResponse;
 import com.nitish.githubapi.beans.RepositoryApiResponse;

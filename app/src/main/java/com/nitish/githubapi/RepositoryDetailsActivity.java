@@ -1,6 +1,7 @@
 package com.nitish.githubapi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import static com.nitish.githubapi.InAppBrowserActivity.WEBSITE_ADDRESS;
 public class RepositoryDetailsActivity extends AppCompatActivity {
 
     GridView contributorsLayout;
+    Toolbar toolbar;
     TextView name;
     TextView projectUrl;
     TextView description;
@@ -49,9 +51,13 @@ public class RepositoryDetailsActivity extends AppCompatActivity {
         projectUrl=findViewById(R.id.project_url);
         description=findViewById(R.id.description);
         contributorsLayout=findViewById(R.id.contributors_layout);
+        toolbar=findViewById(R.id.toolbar);
 
         retrofit=MyRetrofit.getInstance();
         repos=retrofit.getApiRepos();
+
+        toolbar.setNavigationOnClickListener(v->finish());
+
 
         if(getIntent().getExtras() == null)
             return;
@@ -74,7 +80,7 @@ public class RepositoryDetailsActivity extends AppCompatActivity {
 
     public void contributors(){
 
-        repos.getContributors("sav007",getIntent().getExtras().getString("projectName")).enqueue(new Callback<List<ContributorsApiResponse>>() {
+        repos.getContributors("ZacSweers",getIntent().getExtras().getString("projectName")).enqueue(new Callback<List<ContributorsApiResponse>>() {
             @Override
             public void onResponse(Call<List<ContributorsApiResponse>> call, Response<List<ContributorsApiResponse>> response) {
                 runOnUiThread(()->{

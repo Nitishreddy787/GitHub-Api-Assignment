@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.bumptech.glide.Glide;
+import com.nitish.githubapi.ContributorDetailsActivity;
 import com.nitish.githubapi.R;
 import com.nitish.githubapi.beans.ContributorsApiResponse;
 import com.nitish.githubapi.beans.RepositoryApiResponse;
@@ -80,7 +81,15 @@ public class ContributorsListGridViewAdapter extends ArrayAdapter<ContributorsAp
         holder.name.setText(String.valueOf(response.get(position).getId()));
         Glide.with(context).load(response.get(position).getAvatarUrl()).into(holder.avatar);
 
+
+        holder.contributorsLayout.setOnClickListener(view->{
+            Intent contributorsDetails=new Intent(context, ContributorDetailsActivity.class);
+            contributorsDetails.putExtra("userName",response.get(position).getLogin());
+            context.startActivity(contributorsDetails);
+        });
+
         contributorFullDetails(position,holder.name);
+
 
         return convertView;
     }
@@ -89,10 +98,12 @@ public class ContributorsListGridViewAdapter extends ArrayAdapter<ContributorsAp
 
         TextView name;
         de.hdodenhof.circleimageview.CircleImageView avatar;
+        RelativeLayout contributorsLayout;
 
         ViewHolder(View view) {
             name=view.findViewById(R.id.name);
             avatar=view.findViewById(R.id.avatar);
+            contributorsLayout=view.findViewById(R.id.contributors_layout);
         }
 
     }
