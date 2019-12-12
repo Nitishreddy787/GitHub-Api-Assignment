@@ -10,7 +10,10 @@ import android.widget.SearchView;
 
 import com.google.gson.JsonObject;
 import com.nitish.githubapi.adapters.RepositorysRecyclerViewAdapter;
+import com.nitish.githubapi.adapters.SearchRepositoryRecyclerViewAdapter;
+import com.nitish.githubapi.beans.ItemsItem;
 import com.nitish.githubapi.beans.RepositoryApiResponse;
+import com.nitish.githubapi.beans.SearchApiResponse;
 import com.nitish.githubapi.services.MyRetrofit;
 import com.nitish.githubapi.services.Repos;
 
@@ -30,11 +33,11 @@ public class MainActivity extends AppCompatActivity {
   MyRetrofit retrofit;
   Repos repos;
   RecyclerView recyclerView;
-  RepositorysRecyclerViewAdapter repositorysRecyclerViewAdapter;
+  SearchRepositoryRecyclerViewAdapter searchRepositoryRecyclerViewAdapter;
 
   SearchView searchRepositories;
   String[] searchQueries;
-  List<RepositoryApiResponse> repositoryApiList;
+  List<ItemsItem> repositoryApiList;
   int maxSize=10;
 
   @Override
@@ -48,11 +51,58 @@ public class MainActivity extends AppCompatActivity {
     retrofit=MyRetrofit.getInstance();
     repos=retrofit.getApiRepos();
 
-    getRepos();
+    searchRepositories.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+      @Override
+      public boolean onQueryTextSubmit(String query) {
+
+        searchRepository(query);
+
+
+        return false;
+      }
+
+      @Override
+      public boolean onQueryTextChange(String newText) {
+        return false;
+      }
+    });
+
+  }
+
+  public void searchRepository(String query){
+
+    repos.getSearchResult(query).enqueue(new Callback<SearchApiResponse>() {
+      @Override
+      public void onResponse(Call<SearchApiResponse> call, Response<SearchApiResponse> response) {
+        if (response.body() != null) {
+          System.out.println("new api:::"+response.body().getItems().get(0).getName());
+
+          
+          Collections.sort(response.body().getItems(), (o1, o2) -> Integer.compare(o2.getWatchersCount(), o1.getWatchersCount()));
+
+          if (response.body().getItems().size() < 10) {
+            maxSize = response.body().getItems().size();
+          }
+
+          repositoryApiList=new ArrayList<>();
+          for(int i=0;i<maxSize;i++) repositoryApiList.add(response.body().getItems().get(i));
+
+          LinearLayoutManager linearLayoutManager=new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL,false);
+          recyclerView.setLayoutManager(linearLayoutManager );
+          searchRepositoryRecyclerViewAdapter =new SearchRepositoryRecyclerViewAdapter(MainActivity.this,repositoryApiList);
+          recyclerView.setAdapter(searchRepositoryRecyclerViewAdapter);
+        }
+      }
+
+      @Override
+      public void onFailure(Call<SearchApiResponse> call, Throwable t) {
+
+      }
+    });
   }
 
 
-  public void getRepos(){
+  /*public void getRepos(){
 
     repos.getUserRepos("ZacSweers").enqueue(new Callback<List<RepositoryApiResponse>>() {
       @Override
@@ -84,6 +134,6 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("repository list api failure::::"+t.getCause().getCause());
       }
     });
-  }
+  }*/
 
 }

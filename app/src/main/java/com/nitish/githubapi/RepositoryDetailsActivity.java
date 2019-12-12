@@ -80,7 +80,7 @@ public class RepositoryDetailsActivity extends AppCompatActivity {
 
     public void contributors(){
 
-        repos.getContributors("ZacSweers",getIntent().getExtras().getString("projectName")).enqueue(new Callback<List<ContributorsApiResponse>>() {
+        repos.getContributors(getIntent().getExtras().getString("loginId"),getIntent().getExtras().getString("projectName")).enqueue(new Callback<List<ContributorsApiResponse>>() {
             @Override
             public void onResponse(Call<List<ContributorsApiResponse>> call, Response<List<ContributorsApiResponse>> response) {
                 runOnUiThread(()->{

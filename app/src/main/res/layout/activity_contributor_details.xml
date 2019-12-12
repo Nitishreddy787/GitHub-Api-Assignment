@@ -44,7 +44,7 @@
             android:layout_marginStart="20dp"
             tools:text="Repository List:"
             android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@id/image"
+            app:layout_constraintTop_toBottomOf="@id/avatar"
             />
 
         <androidx.recyclerview.widget.RecyclerView

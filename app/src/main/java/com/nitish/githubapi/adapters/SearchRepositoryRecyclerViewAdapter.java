@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,10 +14,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.JsonObject;
 import com.nitish.githubapi.R;
 import com.nitish.githubapi.RepositoryDetailsActivity;
 import com.nitish.githubapi.beans.CommitsApiResponse;
+import com.nitish.githubapi.beans.ItemsItem;
 import com.nitish.githubapi.beans.RepositoryApiResponse;
 import com.nitish.githubapi.services.MyRetrofit;
 import com.nitish.githubapi.services.Repos;
@@ -30,15 +28,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RepositorysRecyclerViewAdapter extends RecyclerView.Adapter<RepositorysRecyclerViewAdapter.ViewHolder> {
+public class SearchRepositoryRecyclerViewAdapter extends RecyclerView.Adapter<SearchRepositoryRecyclerViewAdapter.ViewHolder> {
 
-  private List<RepositoryApiResponse> response;
+  private List<ItemsItem> response;
   Context context;
   LayoutInflater mInflater;
   MyRetrofit retrofit;
   Repos repos;
 
-  public RepositorysRecyclerViewAdapter(Context context, List<RepositoryApiResponse> response) {
+  public SearchRepositoryRecyclerViewAdapter(Context context, List<ItemsItem> response) {
     this.context=context;
     this.response=response;
     this.mInflater=LayoutInflater.from(context);
@@ -111,9 +109,9 @@ public class RepositorysRecyclerViewAdapter extends RecyclerView.Adapter<Reposit
       @Override
       public void onResponse(Call<List<CommitsApiResponse>> call, Response<List<CommitsApiResponse>> response) {
         ((Activity) context).runOnUiThread(()-> {
-            if(response.body() != null){
-                commits.setText(String.valueOf(response.body().size()));
-            }
+          if(response.body() != null){
+            commits.setText(String.valueOf(response.body().size()));
+          }
         });
       }
 

@@ -60,7 +60,7 @@ public class ContributorDetailsActivity extends AppCompatActivity {
 
     public void getRepos(){
 
-        repos.getUserRepos("ZacSweers").enqueue(new Callback<List<RepositoryApiResponse>>() {
+        repos.getUserRepos(userName).enqueue(new Callback<List<RepositoryApiResponse>>() {
             @Override
             public void onResponse(@NonNull Call<List<RepositoryApiResponse>> call,@NonNull Response<List<RepositoryApiResponse>> response) {
                 runOnUiThread(()->{
