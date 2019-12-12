@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.nitish.githubapi.adapters.RepositorysRecyclerViewAdapter;
 import com.nitish.githubapi.beans.RepositoryApiResponse;
@@ -34,6 +37,8 @@ public class ContributorDetailsActivity extends AppCompatActivity {
     RepositorysRecyclerViewAdapter repositorysRecyclerViewAdapter;
     List<RepositoryApiResponse> repositoryApiList;
     int maxSize=10;
+    ProgressBar pBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,7 @@ public class ContributorDetailsActivity extends AppCompatActivity {
 
         avatar=findViewById(R.id.avatar);
         repositoryRecyclerView=findViewById(R.id.repository_recycler_view);
+        pBar=findViewById(R.id.pBar);
         toolbar=findViewById(R.id.toolbar);
 
         toolbar.setNavigationOnClickListener(v->finish());
@@ -60,10 +66,13 @@ public class ContributorDetailsActivity extends AppCompatActivity {
 
     public void getRepos(){
 
+        pBar.setVisibility(View.VISIBLE);
+
         repos.getUserRepos(userName).enqueue(new Callback<List<RepositoryApiResponse>>() {
             @Override
             public void onResponse(@NonNull Call<List<RepositoryApiResponse>> call,@NonNull Response<List<RepositoryApiResponse>> response) {
                 runOnUiThread(()->{
+                    pBar.setVisibility(View.GONE);
 
                     if(response.body() != null){
                         Collections.sort(response.body(), (o1, o2) -> Integer.compare(o2.getWatchersCount(), o1.getWatchersCount()));
@@ -86,8 +95,12 @@ public class ContributorDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<List<RepositoryApiResponse>> call,@NonNull Throwable t) {
+                pBar.setVisibility(View.GONE);
+
                 System.out.println("repository list api failure::::"+t.getMessage());
                 System.out.println("repository list api failure::::"+t.getCause().getCause());
+                Toast.makeText(ContributorDetailsActivity.this,"SomeThing went wrong",Toast.LENGTH_SHORT).show();
+
             }
         });
     }

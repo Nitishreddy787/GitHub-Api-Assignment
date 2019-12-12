@@ -36,9 +36,8 @@ public class SearchRepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Se
   MyRetrofit retrofit;
   Repos repos;
 
-  public SearchRepositoryRecyclerViewAdapter(Context context, List<ItemsItem> response) {
+  public SearchRepositoryRecyclerViewAdapter(Context context) {
     this.context=context;
-    this.response=response;
     this.mInflater=LayoutInflater.from(context);
 
     retrofit=MyRetrofit.getInstance();
@@ -54,7 +53,6 @@ public class SearchRepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Se
 
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
 
     Glide.with(context).load(response.get(position).getOwner().getAvatarUrl()).placeholder(R.drawable.image_loading_vertical).into(holder.avatar);
     holder.name.setText("Name: "+response.get(position).getName());
@@ -78,9 +76,17 @@ public class SearchRepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Se
     commits(position,holder.commits);
   }
 
+  public void setRepositoryList(List<ItemsItem> response) {
+    this.response = response;
+    notifyDataSetChanged();
+  }
+
   @Override
   public int getItemCount() {
-    return response.size();
+    if(response != null) {
+      return response.size();
+    }
+    return 0;
   }
 
   static class ViewHolder extends RecyclerView.ViewHolder {
