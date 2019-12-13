@@ -85,6 +85,7 @@ public class ContributorsListGridViewAdapter extends ArrayAdapter<ContributorsAp
         holder.contributorsLayout.setOnClickListener(view->{
             Intent contributorsDetails=new Intent(context, ContributorDetailsActivity.class);
             contributorsDetails.putExtra("userName",response.get(position).getLogin());
+            contributorsDetails.putExtra("avatar",response.get(position).getAvatarUrl());
             context.startActivity(contributorsDetails);
         });
 

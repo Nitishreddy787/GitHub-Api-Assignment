@@ -18,7 +18,7 @@ public interface Repos {
 
   @Headers({"Content-Type: application/json"})
   @GET("/users/{username}/repos")
-  Call<List<RepositoryApiResponse>> getUserRepos(@Path("username") String userName);
+  Call<List<RepositoryApiResponse>> getUserRepos(@Path("username") String userName, @Query("page") int  page, @Query("per_page") int  size);
 
   @Headers({"Content-Type: application/json"})
   @GET("/repos/{userName}/{projectName}/contributors")
@@ -34,7 +34,8 @@ public interface Repos {
 
   @Headers({"Content-Type: application/json"})
   @GET("/search/repositories")
-  Call<SearchApiResponse> getSearchResult(@Query("q") String repositoryName);
+  Call<SearchApiResponse> getSearchResult(@Query("q") String repositoryName, @Query("page") int  page, @Query("per_page") int  size);
+
 
 
 }

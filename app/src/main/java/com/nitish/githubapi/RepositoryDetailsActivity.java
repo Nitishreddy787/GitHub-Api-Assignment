@@ -44,6 +44,7 @@ public class RepositoryDetailsActivity extends AppCompatActivity {
     Repos repos;
     String userName="";
     String projectName="";
+    TextView contributors;
 
     ContributorsListGridViewAdapter contributorsListGridViewAdapter;
     ProgressBar pBar;
@@ -61,6 +62,7 @@ public class RepositoryDetailsActivity extends AppCompatActivity {
         contributorsLayout=findViewById(R.id.contributors_layout);
         toolbar=findViewById(R.id.toolbar);
         pBar=findViewById(R.id.pBar);
+        contributors=findViewById(R.id.contributors);
 
         retrofit=MyRetrofit.getInstance();
         repos=retrofit.getApiRepos();
@@ -98,10 +100,22 @@ public class RepositoryDetailsActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<List<ContributorsApiResponse>> call,@NonNull Response<List<ContributorsApiResponse>> response) {
                 runOnUiThread(()->{
                     try{
+
+                        System.out.println("repo details:::"+response.body());
+
                         pBar.setVisibility(View.GONE);
 
-                        contributorsListGridViewAdapter = new ContributorsListGridViewAdapter(RepositoryDetailsActivity.this,response.body());
-                        contributorsLayout.setAdapter(contributorsListGridViewAdapter);
+                        if(response.body() != null){
+                            if(!(response.body().size() > 0)){
+                                contributors.setText(getResources().getText(R.string.no_contributors));
+                            }else{
+
+                                contributorsListGridViewAdapter = new ContributorsListGridViewAdapter(RepositoryDetailsActivity.this,response.body());
+                                contributorsLayout.setAdapter(contributorsListGridViewAdapter);
+                            }
+                        }
+
+
                     }catch (Exception e){
 
                     }

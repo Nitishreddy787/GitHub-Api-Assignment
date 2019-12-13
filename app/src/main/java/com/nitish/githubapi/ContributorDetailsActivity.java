@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.nitish.githubapi.adapters.RepositorysRecyclerViewAdapter;
 import com.nitish.githubapi.beans.RepositoryApiResponse;
 import com.nitish.githubapi.services.MyRetrofit;
@@ -35,8 +36,6 @@ public class ContributorDetailsActivity extends AppCompatActivity {
     String userName="";
     Toolbar toolbar;
     RepositorysRecyclerViewAdapter repositorysRecyclerViewAdapter;
-    List<RepositoryApiResponse> repositoryApiList;
-    int maxSize=10;
     ProgressBar pBar;
 
 
@@ -59,6 +58,7 @@ public class ContributorDetailsActivity extends AppCompatActivity {
             return;
 
         userName=getIntent().getExtras().getString("userName");
+        Glide.with(ContributorDetailsActivity.this).load(getIntent().getExtras().getString("avatar")).into(avatar);
 
         getRepos();
 
@@ -68,7 +68,7 @@ public class ContributorDetailsActivity extends AppCompatActivity {
 
         pBar.setVisibility(View.VISIBLE);
 
-        repos.getUserRepos(userName).enqueue(new Callback<List<RepositoryApiResponse>>() {
+        repos.getUserRepos(userName,0,10).enqueue(new Callback<List<RepositoryApiResponse>>() {
             @Override
             public void onResponse(@NonNull Call<List<RepositoryApiResponse>> call,@NonNull Response<List<RepositoryApiResponse>> response) {
                 runOnUiThread(()->{
@@ -77,16 +77,9 @@ public class ContributorDetailsActivity extends AppCompatActivity {
                     if(response.body() != null){
                         Collections.sort(response.body(), (o1, o2) -> Integer.compare(o2.getWatchersCount(), o1.getWatchersCount()));
 
-                        if (response.body().size() < 10) {
-                            maxSize = response.body().size();
-                        }
-
-                        repositoryApiList=new ArrayList<>();
-                        for(int i=0;i<maxSize;i++) repositoryApiList.add(response.body().get(i));
-
                         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(ContributorDetailsActivity.this, RecyclerView.VERTICAL,false);
                         repositoryRecyclerView.setLayoutManager(linearLayoutManager );
-                        repositorysRecyclerViewAdapter =new RepositorysRecyclerViewAdapter(ContributorDetailsActivity.this,repositoryApiList);
+                        repositorysRecyclerViewAdapter =new RepositorysRecyclerViewAdapter(ContributorDetailsActivity.this,response.body());
                         repositoryRecyclerView.setAdapter(repositorysRecyclerViewAdapter);
                     }
 

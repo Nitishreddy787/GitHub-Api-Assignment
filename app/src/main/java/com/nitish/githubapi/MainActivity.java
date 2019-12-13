@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
   SearchView searchRepositories;
   List<ItemsItem> repositoryApiList=new ArrayList<>();
-  int maxSize=10;
   ImageView filter;
   BottomSheetDialog filterDialog;
   List<String> filterData=new ArrayList<>();
@@ -152,21 +151,18 @@ public class MainActivity extends AppCompatActivity {
 
     pBar.setVisibility(View.VISIBLE);
 
-    repos.getSearchResult(query).enqueue(new Callback<SearchApiResponse>() {
+    repos.getSearchResult(query,0,10).enqueue(new Callback<SearchApiResponse>() {
       @Override
       public void onResponse(Call<SearchApiResponse> call, Response<SearchApiResponse> response) {
-        pBar.setVisibility(View.GONE);
 
         if (response.body() != null) {
 
+          pBar.setVisibility(View.GONE);
+
           Collections.sort(response.body().getItems(), (o1, o2) -> Integer.compare(o2.getWatchersCount(), o1.getWatchersCount()));
 
-          if (response.body().getItems().size() < 10) {
-            maxSize = response.body().getItems().size();
-          }
-
           repositoryApiList=new ArrayList<>();
-          for(int i=0;i<maxSize;i++) repositoryApiList.add(response.body().getItems().get(i));
+          repositoryApiList.addAll(response.body().getItems());
 
           LinearLayoutManager linearLayoutManager=new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL,false);
           recyclerView.setLayoutManager(linearLayoutManager );

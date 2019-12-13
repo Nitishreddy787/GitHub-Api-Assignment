@@ -1,5 +1,6 @@
 package com.nitish.githubapi.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -8,12 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.nitish.githubapi.MainActivity;
 import com.nitish.githubapi.R;
 import com.nitish.githubapi.RepositoryDetailsActivity;
 import com.nitish.githubapi.beans.CommitsApiResponse;
@@ -112,11 +115,12 @@ public class SearchRepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Se
   private void commits(int position, TextView commits){
 
     repos.commits(response.get(position).getOwner().getLogin(),response.get(position).getName()).enqueue(new Callback<List<CommitsApiResponse>>() {
+      @SuppressLint("SetTextI18n")
       @Override
       public void onResponse(Call<List<CommitsApiResponse>> call, Response<List<CommitsApiResponse>> response) {
         ((Activity) context).runOnUiThread(()-> {
           if(response.body() != null){
-            commits.setText(String.valueOf(response.body().size()));
+            commits.setText("Commit Counts: "+ response.body().size());
           }
         });
       }
@@ -124,7 +128,7 @@ public class SearchRepositoryRecyclerViewAdapter extends RecyclerView.Adapter<Se
       @Override
       public void onFailure(Call<List<CommitsApiResponse>> call, Throwable t) {
         ((Activity) context).runOnUiThread(()-> {
-
+          Toast.makeText(context,"SomeThing went wrong",Toast.LENGTH_SHORT).show();
         });
       }
     });

@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginStart="20dp"
-            tools:text="Repository List:"
+            android:text="Repository List:"
             android:textSize="18sp"
             app:layout_constraintTop_toBottomOf="@id/avatar"
             />
