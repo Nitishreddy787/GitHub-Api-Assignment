@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">GitHub Api</string>
+    <string name="app_name">Assignment GitHub</string>
     <string name="no_contributors">There are no contributors in this repository</string>
 </resources>
